@@ -14,6 +14,7 @@ Locally,
 
 In CI,
 
+- Reuse Docker cache
 - Reuse yarn cache
 - Reuse Next.js build cache
 - Run Playwright tests against production-built Next.js
