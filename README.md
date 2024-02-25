@@ -9,8 +9,9 @@ Locally,
 - Develop with Docker Compose, changes to local files are reflected in the container
 - Changes to package.json reuse yarn cache
 - Run Playwright tests against development Next.js
+  - Changes to source files reuse Next.js build cache
 - Run Playwright tests against production-built Next.js
-- Changes to source files reuse Next.js build cache
+  - Reuse Docker cache
 
 In CI,
 
