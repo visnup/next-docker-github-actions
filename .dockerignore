@@ -1,1 +1,31 @@
+# Should be a superset of .gitignore
+
+# dependencies
+/node_modules
+.yarn/install-state.gz
+
+# next.js
+/.next/
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# docker specific
+/.github/
+.dockerignore
 .gitignore
+Dockerfile
+README.md
