@@ -47,6 +47,19 @@ jobs:
           cache-target: /usr/local/share/.cache/yarn
           skip-extraction: ${{ steps.cache-yarn.outputs.cache-hit }}
 
+      - name: Cache Next.js
+        id: cache-nextjs
+        uses: actions/cache@v4
+        with:
+          path: nextjs
+          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+      - name: Inject Next.js cache mounts
+        uses: reproducible-containers/buildkit-cache-dance@v2.1.4
+        with:
+          cache-source: nextjs
+          cache-target: /app/.next/cache
+          skip-extraction: ${{ steps.cache-nextjs.outputs.cache-hit }}
+
       - name: Build and push Docker image
         id: build-and-push
         uses: docker/build-push-action@v5
