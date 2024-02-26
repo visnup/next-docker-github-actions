@@ -38,7 +38,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: yarn
-          key: ${{ runner.os }}-yarn
+          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
       - name: Inject yarn cache mounts
         uses: reproducible-containers/buildkit-cache-dance@v2.1.2
         with:
