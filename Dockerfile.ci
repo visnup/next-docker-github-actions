@@ -14,5 +14,6 @@ COPY . .
 
 RUN --mount=type=cache,target=/app/.next/cache \
     yarn build
+RUN yarn cache dir
 
 CMD yarn start
