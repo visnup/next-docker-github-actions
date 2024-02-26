@@ -41,7 +41,7 @@ jobs:
           path: yarn
           key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}-1
       - name: Inject yarn cache mounts
-        uses: reproducible-containers/buildkit-cache-dance@v2.1.2
+        uses: reproducible-containers/buildkit-cache-dance@v2.1.4
         with:
           cache-source: yarn
           cache-target: /usr/local/share/.cache/yarn
