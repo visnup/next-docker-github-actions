@@ -1,0 +1,22 @@
+# This is used for tests and CI/CD, not for local development
+services:
+  next:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./src:/app/src
+    ports:
+      - 3000:3000
+
+  db:
+    image: postgres:16.2-alpine3.19
+    tmpfs: /var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=trust
+    healthcheck:
+      test: pg_isready
+      interval: 1s
+      retries: 10

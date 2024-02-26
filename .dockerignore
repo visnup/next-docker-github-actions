@@ -27,5 +27,6 @@ next-env.d.ts
 /.github/
 .dockerignore
 .gitignore
+compose.yaml
 Dockerfile
 README.md
