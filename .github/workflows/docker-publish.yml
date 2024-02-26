@@ -35,6 +35,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Cache yarn
+        id: cache-yarn
         uses: actions/cache@v4
         with:
           path: yarn
@@ -44,6 +45,7 @@ jobs:
         with:
           cache-source: yarn
           cache-target: /usr/local/share/.cache/yarn
+          skip-extraction: ${{ steps.cache-yarn.outputs.cache-hit }}
 
       - name: Build and push Docker image
         id: build-and-push
