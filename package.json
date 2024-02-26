@@ -1,5 +1,6 @@
 {
   "name": "next-docker-github-actions",
+  "description": "yarn cache hit",
   "version": "0.1.0",
   "private": true,
   "scripts": {
