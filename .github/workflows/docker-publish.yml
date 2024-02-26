@@ -34,15 +34,16 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - name: Cache Docker cache mounts
+      - name: Cache yarn
         uses: actions/cache@v3
         with:
-          path: docker-cache-mounts
-          key: ${{ runner.os }}-docker-cache-mounts
-      - name: Inject Docker cache mounts
+          path: yarn
+          key: ${{ runner.os }}-yarn
+      - name: Inject yarn cache mounts
         uses: reproducible-containers/buildkit-cache-dance@v2.1.2
         with:
-          cache-source: docker-cache-mounts
+          cache-source: yarn
+          cache-target: /usr/local/share/.cache/yarn
 
       - name: Build and push Docker image
         id: build-and-push
