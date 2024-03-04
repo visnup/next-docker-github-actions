@@ -19,3 +19,5 @@ In CI,
 - Reuse yarn cache
 - Reuse Next.js build cache
 - Run Playwright tests against production-built Next.js
+
+Cacheable change
