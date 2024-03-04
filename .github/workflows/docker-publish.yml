@@ -3,10 +3,6 @@ name: Docker Publish
 on:
   push:
 
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
-
 jobs:
   Build:
     runs-on: ubuntu-latest
@@ -15,51 +11,18 @@ jobs:
       packages: write
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Log into registry ${{ env.REGISTRY }}
-        uses: docker/login-action@v3
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
         with:
-          registry: ${{ env.REGISTRY }}
+          registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Extract Docker metadata
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-
-      - name: Cache yarn
-        id: cache-yarn
-        uses: actions/cache@v4
-        with:
-          path: yarn
-          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}-1
-      - name: Inject yarn cache mounts
-        uses: reproducible-containers/buildkit-cache-dance@v2.1.4
-        with:
-          cache-source: yarn
-          cache-target: /usr/local/share/.cache/yarn
-          skip-extraction: ${{ steps.cache-yarn.outputs.cache-hit }}
-
-      - name: Cache Next.js
-        id: cache-nextjs
-        uses: actions/cache@v4
-        with:
-          path: nextjs
-          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
-      - name: Inject Next.js cache mounts
-        uses: reproducible-containers/buildkit-cache-dance@v2.1.4
-        with:
-          cache-source: nextjs
-          cache-target: /app/.next/cache
-          skip-extraction: ${{ steps.cache-nextjs.outputs.cache-hit }}
-
+          images: ghcr.io/${{ github.repository }}
       - name: Build and push Docker image
         id: build-and-push
         uses: docker/build-push-action@v5
@@ -69,5 +32,5 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          # cache-from: type=gha
-          # cache-to: type=gha,mode=max
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
