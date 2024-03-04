@@ -18,14 +18,12 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Extract Docker metadata
+      - uses: docker/metadata-action@v5
         id: meta
-        uses: docker/metadata-action@v5
         with:
           images: ghcr.io/${{ github.repository }}
-      - name: Build and push Docker image
+      - uses: docker/build-push-action@v5
         id: build-and-push
-        uses: docker/build-push-action@v5
         with:
           context: .
           file: Dockerfile.ci
